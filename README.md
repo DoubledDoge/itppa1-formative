@@ -1,6 +1,6 @@
 # ITPPA1-B44 Assignment
 
-This repository contains my formative assignment for the ITPPA1-B44 module at Eduvos University. It also is officialy my very first GitHub-repository.
+This repository contains my formative assignment for the ITPPA1-B44 module at my university. It also is officialy my very first GitHub-repository.
 
 ## Repository Structure
 
