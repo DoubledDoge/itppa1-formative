@@ -61,6 +61,20 @@ void viewMenu()
 
 void placeOrder()
 {
+    int itemAmount, itemNo; // (Should be a array here)
+
+    cout << "Choose the amount of items you want to purchase: " << endl;
+    cin >> itemAmount;
+
+    cout << endl;
+
+    for (int i; i < itemAmount; i++)
+    {
+        cout << "Choose the " << i << "st item number you want to purchase:" << endl;
+        cout << "(Enter '0' to display the item menu again)" << endl;
+        cout << endl;
+        cin >> itemNo;
+    }
 }
 
 void viewOrder()
@@ -161,7 +175,7 @@ int main()
     {
         displayCLIMenu(choice);
         continueRunning = handleCLIMenuChoice(choice, firstName, lastName);
-    } while (continueRunning); // If the program is meant to be running or not.
+    } while (continueRunning); // Check if the program is meant to be running or not.
 
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the farewell message
 
