@@ -96,14 +96,6 @@ void viewMenu()
     cout << "|  4. | Juice        |    10.00  ||  8. | Burger       |    40.00  |" << endl;
     cout << "====================================================================" << endl;
     cout << endl;
-
-    int done;
-    do
-    {
-        cout << "Continue? (Enter '1' to continue): ";
-        cin >> done;
-        cin.clear();
-    } while (done != 1);
 }
 
 // Function to place an order:
@@ -118,6 +110,7 @@ void placeOrder(const Item menu[], int menuSize)
         cin >> returnChoice;
         if (returnChoice != 1)
         {
+            cout << endl;
             cout << "Returning to the main menu." << endl;
             return;
         }
@@ -135,6 +128,8 @@ void placeOrder(const Item menu[], int menuSize)
         cin >> amountOrdered;
         cout << endl;
     } while (amountOrdered > 25);
+
+    viewMenu();
 
     // Loop to buy the items according to the specified amount:
     for (int i = 1; i <= amountOrdered; i++)
@@ -268,7 +263,7 @@ void checkoutOrder()
         this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the net total
 
         // Ask the user to write their details to CafeteriaBill.txt:
-        cout << "Confirm transaction? Your bill and details will be written to a file called CafeteriaBill.txt (Enter '1' for Yes):" << endl;
+        cout << "Confirm transaction? Your bill and details will be written to a file called CafeteriaBill.txt (Enter '1' for Yes):";
         cin >> confirmed;
         cout << endl;
         if (confirmed == 1)
@@ -279,7 +274,7 @@ void checkoutOrder()
             confirmed = 0; // Reuse the same variable for the second question
 
             // Ask the user to finish the program once the file has been written:
-            cout << "Are you finished using this program? (Enter '1' for Yes):" << endl;
+            cout << "Are you finished using this program? (Enter '1' for Yes):";
             cin >> confirmed;
             cout << endl;
             if (confirmed == 1)
@@ -335,6 +330,16 @@ void handleCLIMenuChoice(int choice, const Item menu[], int menuSize)
     {
     case 1:
         viewMenu();
+        int done;
+
+        // Confirmation before returning to the CLI menu:
+        do
+        {
+            cout << "Continue? (Enter '1' to continue): ";
+            cin >> done;
+            cin.clear();
+        } while (done != 1);
+
         break;
     case 2:
         placeOrder(menu, menuSize);
