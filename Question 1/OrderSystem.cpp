@@ -5,6 +5,8 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <fstream>
+#include <filesystem>
 
 using namespace std;
 
@@ -293,7 +295,7 @@ void checkoutOrder()
     if (hasOrdered)
     {
         // Check if the user is applicable for the discount (Gross total over R 100):
-        if (grossTotal > DISCOUNT_THRESHOLD)
+        if (grossTotal >= DISCOUNT_THRESHOLD)
         {
             cout << "Hooray! You are applicable for our daily discount special!" << endl;
             this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message
@@ -313,18 +315,33 @@ void checkoutOrder()
         displayOrderSummary();
         cout << "Final Bill: R " << formatPrice(netTotal) << endl;
         this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final bill
+        cout << endl;
 
         // Ask the user to write their details to CafeteriaBill.txt:
-        cout << "Confirm transaction? Your bill and details will be written to a file called CafeteriaBill.txt (Enter '1' for Yes):";
+        cout << "Confirm transaction? Your bill and details will be written to a file called CafeteriaBill.txt (Enter '1' for Yes): ";
         cin >> confirmed1;
         cout << endl;
+
         if (confirmed1 == 1)
         {
             // Writing the details to the file:
-            //  (Writing to a file goes here)
+            filesystem::path filePath = "CafeteriaBill.txt";
+            ofstream outFile(filePath, ios::app); // Open in append mode
+
+            if (outFile.is_open())
+            {
+                outFile << firstName << " " << lastName << ": R" << formatPrice(netTotal) << endl;
+                outFile.close();
+                cout << "Bill details have been written to CafeteriaBill.txt" << endl;
+                cout << endl;
+            }
+            else
+            {
+                cout << "Unable to open file for writing." << endl;
+            }
 
             // Ask the user to finish the program once the file has been written:
-            cout << "Are you finished using this program? (Enter '1' for Yes):";
+            cout << "Are you finished using this program? (Enter '1' for Yes): ";
             cin >> confirmed2;
             cout << endl;
             if (confirmed2 == 1)
