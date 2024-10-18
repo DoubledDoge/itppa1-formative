@@ -342,7 +342,7 @@ void checkoutOrder()
 }
 
 // Function to display the CLI menu:
-void displayCLIMenu(int &choice)
+void displayCLIMenu()
 {
     // CLI menu:
     cout << "===== Cafeteria CLI Menu =====" << endl;
@@ -373,7 +373,7 @@ void displayCLIMenu(int &choice)
 }
 
 // Function to handle CLI menu choices:
-void handleCLIMenuChoice(int choice)
+void handleCLIMenuChoice()
 {
     switch (choice)
     {
@@ -436,8 +436,8 @@ int main()
     // Main Loop of the program (CLI Menu):
     while (continueRunning) // Check if the program is meant to be running or not.
     {
-        displayCLIMenu(choice);
-        handleCLIMenuChoice(choice);
+        displayCLIMenu();
+        handleCLIMenuChoice();
     }
 
     cout << endl;
