@@ -8,31 +8,38 @@
 
 using namespace std;
 
-// Item object:
-struct Item
-{
-    int no;
-    string name;
-    double price;
-};
+// Other constant variables:
+const double DISCOUNT_RATE = 0.10;        // 10% discount
+const double DISCOUNT_THRESHOLD = 100.00; // Discount applies if bill is over R100
+const int MAX_ITEMS = 25;
 
-// My global variables
-Item orderedItems[25];
+// Menu Variables:
+const double COFFEE_PRICE = 15.00;
+const double SANDWICH_PRICE = 30.00;
+const double SALAD_PRICE = 25.00;
+const double JUICE_PRICE = 10.00;
+const double MUFFIN_PRICE = 20.00;
+const double PIZZA_PRICE = 35.00;
+const double SOUP_PRICE = 18.00;
+const double BURGER_PRICE = 40.00;
+
+// Global Arrays:
+string orderedItemNames[MAX_ITEMS];
+double orderedItemPrices[MAX_ITEMS];
+
+// Other Global Variables:
 string firstName, lastName;
-int choice, orderCount = 0, grossTotal = 0;
-bool continueRunning = true, hasOrdered = false; // Variable used to check if the program is still running
+int choice, orderCount = 0;
+double grossTotal = 0;
+bool continueRunning = true, hasOrdered = false;
 
-// Global menu array:
-const int menuSize = 8;
-const Item menu[menuSize] = {
-    {1, "Coffee", 15.00},
-    {2, "Sandwich", 30.00},
-    {3, "Salad", 25.00},
-    {4, "Juice", 10.00},
-    {5, "Muffin", 20.00},
-    {6, "Pizza Slice", 35.00},
-    {7, "Soup", 18.00},
-    {8, "Burger", 40.00}};
+// Function to take a price and returns a string with the price formatted to two decimal places:
+string formatPrice(double price)
+{
+    char buffer[10];
+    snprintf(buffer, sizeof(buffer), "%.2f", price);
+    return string(buffer);
+}
 
 // Function to end the program:
 bool endProgram()
@@ -43,13 +50,13 @@ bool endProgram()
 }
 
 // Function to get a valid string input from the user:
-string getValidInput(const string &prompt)
+string getValidInput(const string &PROMPT)
 {
     string input;
     do
     {
         // Input:
-        cout << prompt;
+        cout << PROMPT;
         getline(cin, input);
 
         // Input Validation:
@@ -77,7 +84,7 @@ void displayOrderSummary()
     cout << endl;
     for (int i = 0; i < orderCount; i++)
     {
-        cout << i + 1 << ". Item " << orderedItems[i].no << ": " << orderedItems[i].name << " - R " << orderedItems[i].price << ".00" << endl;
+        cout << i + 1 << ". " << orderedItemNames[i] << " - R " << formatPrice(orderedItemPrices[i]) << endl;
         cout << endl;
     }
     cout << endl;
@@ -86,20 +93,23 @@ void displayOrderSummary()
 // Function to display the item menu:
 void viewMenu()
 {
-    // Item menu table:
     cout << "======================= Cafeteria Item Menu ========================" << endl;
-    cout << "| No. | Item         | Price (R) || No. | Item         | Price (R) |" << endl;
-    cout << "|-----|--------------|-----------||-----|--------------|-----------|" << endl;
-    cout << "|  1. | Coffee       |    15.00  ||  5. | Muffin       |    20.00  |" << endl;
-    cout << "|  2. | Sandwich     |    30.00  ||  6. | Pizza Slice  |    35.00  |" << endl;
-    cout << "|  3. | Salad        |    25.00  ||  7. | Soup         |    18.00  |" << endl;
-    cout << "|  4. | Juice        |    10.00  ||  8. | Burger       |    40.00  |" << endl;
+    cout << endl;
+    cout << "1. Coffee       - R " << formatPrice(COFFEE_PRICE) << endl;
+    cout << "2. Sandwich     - R " << formatPrice(SANDWICH_PRICE) << endl;
+    cout << "3. Salad        - R " << formatPrice(SALAD_PRICE) << endl;
+    cout << "4. Juice        - R " << formatPrice(JUICE_PRICE) << endl;
+    cout << "5. Muffin       - R " << formatPrice(MUFFIN_PRICE) << endl;
+    cout << "6. Pizza Slice  - R " << formatPrice(PIZZA_PRICE) << endl;
+    cout << "7. Soup         - R " << formatPrice(SOUP_PRICE) << endl;
+    cout << "8. Burger       - R " << formatPrice(BURGER_PRICE) << endl;
+    cout << endl;
     cout << "====================================================================" << endl;
     cout << endl;
 }
 
 // Function to place an order:
-void placeOrder(const Item menu[], int menuSize)
+void placeOrder()
 {
     int amountOrdered, itemNo;
 
@@ -124,10 +134,10 @@ void placeOrder(const Item menu[], int menuSize)
     // Inputting only 25 items max:
     do
     {
-        cout << "Choose the amount of items you want to purchase (25 items max): ";
+        cout << "Choose the amount of items you want to purchase (" << MAX_ITEMS << " items max): ";
         cin >> amountOrdered;
         cout << endl;
-    } while (amountOrdered > 25);
+    } while (amountOrdered > MAX_ITEMS);
 
     viewMenu();
 
@@ -140,43 +150,86 @@ void placeOrder(const Item menu[], int menuSize)
         cin.clear();
         cout << endl;
 
-        // Display the menu again at the user's request:
-        if (itemNo == 0)
+        // Variables used for the switch statement:
+        string itemName;
+        double itemPrice;
+
+        // Switch statement to get the item name and price according to the item number:
+        switch (itemNo)
         {
+        case 0:
+            // Display the menu again at the user's request:
             viewMenu();
             i--; // Reset i to previous value to prevent the item being discarded
-            continue;
-        }
-
-        // Input Validation:
-        if (itemNo < 0 || itemNo > menuSize)
-        {
+            break;
+        case 1:
+            itemName = "Coffee";
+            itemPrice = COFFEE_PRICE;
+            break;
+        case 2:
+            itemName = "Sandwich";
+            itemPrice = SANDWICH_PRICE;
+            break;
+        case 3:
+            itemName = "Salad";
+            itemPrice = SALAD_PRICE;
+            break;
+        case 4:
+            itemName = "Juice";
+            itemPrice = JUICE_PRICE;
+            break;
+        case 5:
+            itemName = "Muffin";
+            itemPrice = MUFFIN_PRICE;
+            break;
+        case 6:
+            itemName = "Pizza Slice";
+            itemPrice = PIZZA_PRICE;
+            break;
+        case 7:
+            itemName = "Soup";
+            itemPrice = SOUP_PRICE;
+            break;
+        case 8:
+            itemName = "Burger";
+            itemPrice = BURGER_PRICE;
+            break;
+        default:
+            // Input Validation:
             cout << "Invalid item number. Please try again." << endl;
             i--; // Reset i to previous value to prevent the item being discarded
-            continue;
+            break;
         }
 
-        cout << endl;
-        // Calculation of gross total and adding the item to the current order array:
-        grossTotal += menu[itemNo - 1].price;
-        orderedItems[orderCount++] = menu[itemNo - 1]; // Add the ordered item to the array
-        cout << "Added " << menu[itemNo - 1].name << " to your order." << endl;
-        cout << endl;
+        // Check if its a valid item number:
+        if (itemNo > 0 && itemNo < 9)
+        {
+            // Calculations:
+            grossTotal += itemPrice;                   // Add the item price to the gross total
+            orderedItemNames[orderCount] = itemName;   // Add the item name to the ordered item names array
+            orderedItemPrices[orderCount] = itemPrice; // Add the item price to the ordered item prices array
+            orderCount++;                              // Increment the order count
+
+            // Confirmation Message:
+            cout << "Added " << itemName << " to your order." << endl;
+            cout << endl;
+        }
     }
 
     // Final Message (Gross total and ordered items):
     displayOrderSummary();
-    cout << "Total Bill: R " << grossTotal << ".00" << endl;
+    cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
     cout << endl;
 }
 
 void viewOrder()
 {
+    // Display the order summary if the user has ordered:
     if (hasOrdered)
     {
         displayOrderSummary();
-        cout << "Total Bill: R " << grossTotal << ".00" << endl;
+        cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
         this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
     }
     else
@@ -189,6 +242,7 @@ void viewOrder()
 
 void cancelOrder()
 {
+    // Cancel the order if the user has ordered:
     if (hasOrdered)
     {
         // Simple confirmation of the user:
@@ -196,21 +250,21 @@ void cancelOrder()
 
         cout << "Are you sure you want to cancel your order? (Enter '1' for Yes): ";
         cin >> confirm;
-        cin.clear();
 
-        // Reset:
+        // Resetting the order:
         if (confirm == 1)
         {
-            grossTotal = 0;              // Reset the gross total
-            orderCount = 0;              // Reset the order count
-            for (int i = 0; i < 25; i++) // Clear the orderedItems array
+            grossTotal = 0;                     // Reset the gross total
+            orderCount = 0;                     // Reset the order count
+            for (int i = 0; i < MAX_ITEMS; i++) // Clear the ordered items arrays one by one
             {
-                orderedItems[i] = Item{0, "", 0.0};
+                orderedItemNames[i] = ""; // "" = empty string
+                orderedItemPrices[i] = 0.00;
             }
             cout << endl;
             cout << "Order cancelled. Your order summary has been cleared." << endl;
             cout << endl;
-            hasOrdered = false;
+            hasOrdered = false; // Reset the hasOrdered variable
         }
         else // No reset:
         {
@@ -219,7 +273,7 @@ void cancelOrder()
             cout << endl;
         }
 
-        cout << "Total Bill: R " << grossTotal << ".00" << endl;
+        cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
         this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
     }
     else
@@ -232,52 +286,48 @@ void cancelOrder()
 
 void checkoutOrder()
 {
-    int netTotal = 0, confirmed = 0, discountAmount;
-    const double discountThreshold = 100.00, discountRate = 0.10;
+    double netTotal = 0, discountAmount = 0;
+    int confirmed1 = 0, confirmed2 = 0;
 
-    // Check if there is an order before
+    // Check if the user has ordered:
     if (hasOrdered)
     {
-        if (grossTotal > discountThreshold)
+        // Check if the user is applicable for the discount (Gross total over R 100):
+        if (grossTotal > DISCOUNT_THRESHOLD)
         {
-            cout << "Hooray! You are appllicable for our daily discount special!" << endl;
-            cout << endl;
-            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the discount message
-            discountAmount = grossTotal * discountRate;
+            cout << "Hooray! You are applicable for our daily discount special!" << endl;
+            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message
+
+            // Calculations:
+            discountAmount = grossTotal * DISCOUNT_RATE;
             netTotal = grossTotal - discountAmount;
-            cout << endl;
-            cout << "Discounted Amount: R " << discountAmount << ".00" << endl;
+            cout << "Discounted Amount: R " << formatPrice(discountAmount) << endl;
         }
         else
         {
             cout << "No discount is applied to your order. Too bad." << endl;
-            cout << endl;
-            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the discount message
+            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message
             netTotal = grossTotal;
         }
 
-        cout << endl;
         displayOrderSummary();
-        cout << "Final Bill: R " << netTotal << ".00" << endl;
-        cout << endl;
-        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the net total
+        cout << "Final Bill: R " << formatPrice(netTotal) << endl;
+        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final bill
 
         // Ask the user to write their details to CafeteriaBill.txt:
         cout << "Confirm transaction? Your bill and details will be written to a file called CafeteriaBill.txt (Enter '1' for Yes):";
-        cin >> confirmed;
+        cin >> confirmed1;
         cout << endl;
-        if (confirmed == 1)
+        if (confirmed1 == 1)
         {
             // Writing the details to the file:
             //  (Writing to a file goes here)
 
-            confirmed = 0; // Reuse the same variable for the second question
-
             // Ask the user to finish the program once the file has been written:
             cout << "Are you finished using this program? (Enter '1' for Yes):";
-            cin >> confirmed;
+            cin >> confirmed2;
             cout << endl;
-            if (confirmed == 1)
+            if (confirmed2 == 1)
             {
                 cout << "Thank you for shopping at our university cafeteria!";
                 continueRunning = endProgram();
@@ -287,8 +337,7 @@ void checkoutOrder()
     else
     {
         cout << "You need to place an order first, silly!" << endl;
-        cout << endl;
-        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message
+        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the message
     }
 }
 
@@ -324,14 +373,13 @@ void displayCLIMenu(int &choice)
 }
 
 // Function to handle CLI menu choices:
-void handleCLIMenuChoice(int choice, const Item menu[], int menuSize)
+void handleCLIMenuChoice(int choice)
 {
     switch (choice)
     {
     case 1:
         viewMenu();
         int done;
-
         // Confirmation before returning to the CLI menu:
         do
         {
@@ -339,10 +387,9 @@ void handleCLIMenuChoice(int choice, const Item menu[], int menuSize)
             cin >> done;
             cin.clear();
         } while (done != 1);
-
         break;
     case 2:
-        placeOrder(menu, menuSize);
+        placeOrder();
         break;
     case 3:
         viewOrder();
@@ -373,26 +420,24 @@ int main()
     cout << "Welcome to the Cafeteria Order System!" << endl;
     cout << "Lets get you logged in." << endl;
     this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the welcome message
-
     cout << endl;
 
     // User Login:
     getUserName(firstName, lastName);
-
     cout << endl;
 
     // Login Confirmation:
     cout << "Hello, " << firstName << " " << lastName << "!" << endl;
     cout << "You can now proceed with your order." << endl;
     cout << "Please wait..." << endl;
-    cout << endl;
     this_thread::sleep_for(chrono::seconds(3)); // Wait timer to simulate waiting for the program
+    cout << endl;
 
     // Main Loop of the program (CLI Menu):
     while (continueRunning) // Check if the program is meant to be running or not.
     {
         displayCLIMenu(choice);
-        handleCLIMenuChoice(choice, menu, menuSize);
+        handleCLIMenuChoice(choice);
     }
 
     cout << endl;
