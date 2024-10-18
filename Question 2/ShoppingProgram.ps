@@ -1,0 +1,97 @@
+function placeOrder()
+
+    # Variables:
+    integer amountOrdered, orderCount = 1, i, itemNo
+    double grossTotal, itemPrice, orderedItemPrices[amountOrdered]
+
+    # Constant variables:
+    Constant double COFFEE_PRICE = 15.00, SANDWICH_PRICE = 30.00, SALAD_PRICE = 25.00,JUICE_PRICE = 10.00, MUFFIN_PRICE = 20.00, PIZZA_PRICE = 35.00, SOUP_PRICE = 18.00,BURGER_PRICE = 40.00
+
+    # Purchasing less thant 25 items:
+    do until amountOrdered <= 25
+        display "Choose the amount of items you want to purchase (25 items max): "
+        input amountOrdered
+    loop
+
+    # Main loop of the function:
+    for i = 0 to amountOrdered do
+        display "Choose the item no", i, " that you want to purchase: "
+        input itemNo
+        
+        # Switch case of the menu items:
+        Select Case itemNo
+            Case 1
+            itemPrice = COFFEE_PRICE 
+            Case 2
+            itemPrice = SANDWICH_PRICE
+            Case 3
+            itemPrice = SALAD_PRICE
+            Case 4
+            itemPrice = JUICE_PRICE
+            Case 5
+            itemPrice = MUFFIN_PRICE
+            Case 6
+            itemPrice = PIZZA_PRICE
+            Case 7
+            itemPrice = SOUP_PRICE
+            Case 8
+            itemPrice = BURGER_PRICE
+        endselect
+
+        # Calculations:
+        grossTotal = grossTotal + itemPrice
+        orderedItemPrices[orderCount] = itemPrice
+        orderCount = orderCount + 1
+    endfor
+
+    return grossTotal
+endfunction
+
+function checkoutOrder(valGrossTotal, valFirstName, valLastName)
+
+# Variables:
+Constant double DISCOUNT_THRESHOLD = 100.00, DISCOUNT_RATE = 0.10
+integer netTotal, discountAmount 
+
+    # Check for discount and apply it:
+    if valGrossTotal > DISCOUNT_THRESHOLD then
+        display "Discount Applied"
+        discountAmount = valGrossTotal * DISCOUNT_RATE
+        netTotal = valGrossTotal - discountAmount
+        display "Discount Amount: R", discountAmount
+    else
+        display "No discount applied"
+        netTotal = valGrossTotal
+    endif
+
+    # Final Bill:
+    display "Final Bill: R ", netTotal
+
+    # Write to CafeteriaBill.txt
+    if exists(CafeteriaBill.txt) then 
+        open output(CafeteriaBill.txt)
+        write(valFirstName, " ", valLastName,  " R", netTotal) to CafeteriaBill.txt
+        close(CafeteriaBill.txt)
+    endif
+
+    return
+endfunction
+
+ShoppingProgram
+Start
+    string firstName, lastName
+    integer grossTotal
+
+    # First and last name input:
+    display "Please enter your first name: "
+    input firstName
+
+    display "Please enter your last name: "
+    input lastName
+
+    # Functions:
+    grossTotal = placeOrder()
+    checkoutOrder(grossTotal, firstName, lastName)
+
+    display 
+End
