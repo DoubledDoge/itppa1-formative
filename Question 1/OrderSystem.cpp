@@ -373,7 +373,7 @@ void displayCLIMenu()
 }
 
 // Function to handle CLI menu choices:
-void handleCLIMenuChoice()
+void handleCLIMenu()
 {
     switch (choice)
     {
@@ -437,7 +437,7 @@ int main()
     while (continueRunning) // Check if the program is meant to be running or not.
     {
         displayCLIMenu();
-        handleCLIMenuChoice();
+        handleCLIMenu();
     }
 
     cout << endl;
