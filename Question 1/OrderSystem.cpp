@@ -10,10 +10,14 @@
 
 using namespace std;
 
-// Other constant variables:
-const double DISCOUNT_RATE = 0.10;        // 10% discount
-const double DISCOUNT_THRESHOLD = 100.00; // Discount applies if bill is over R100
-const int MAX_ITEMS = 25;
+// Global Arrays:
+string orderedItemNames[MAX_ITEMS];
+double orderedItemPrices[MAX_ITEMS];
+
+// Global Variables:
+int choice, orderCount = 0;
+double grossTotal = 0;
+bool continueRunning = true, hasOrdered = false;
 
 // Menu Variables:
 const double COFFEE_PRICE = 15.00;
@@ -25,15 +29,8 @@ const double PIZZA_PRICE = 35.00;
 const double SOUP_PRICE = 18.00;
 const double BURGER_PRICE = 40.00;
 
-// Global Arrays:
-string orderedItemNames[MAX_ITEMS];
-double orderedItemPrices[MAX_ITEMS];
-
-// Other Global Variables:
-string firstName, lastName;
-int choice, orderCount = 0;
-double grossTotal = 0;
-bool continueRunning = true, hasOrdered = false;
+// Constant Variable:
+const int MAX_ITEMS = 25;
 
 // Function to take a price and returns a string with the price formatted to two decimal places:
 string formatPrice(double price)
@@ -44,7 +41,7 @@ string formatPrice(double price)
 }
 
 // Function to end the program:
-bool endProgram()
+bool endProgram(string &firstName, string &lastName)
 {
     cout << endl;
     cout << "Thank you for using the Cafeteria Order System, " << firstName << " " << lastName << "! Have a great day!" << endl;
@@ -286,10 +283,14 @@ void cancelOrder()
     cout << endl;
 }
 
-void checkoutOrder()
+void checkoutOrder(string &firstName, string &lastName)
 {
     double netTotal = 0, discountAmount = 0;
     int confirmed1 = 0, confirmed2 = 0;
+
+    // Constant variables:
+    const double DISCOUNT_RATE = 0.10;        // 10% discount
+    const double DISCOUNT_THRESHOLD = 100.00; // Discount applies if bill is over R100
 
     // Check if the user has ordered:
     if (hasOrdered)
@@ -347,7 +348,7 @@ void checkoutOrder()
             if (confirmed2 == 1)
             {
                 cout << "Thank you for shopping at our university cafeteria!";
-                continueRunning = endProgram();
+                continueRunning = endProgram(firstName, lastName);
             }
         }
     }
@@ -390,7 +391,7 @@ void displayCLIMenu()
 }
 
 // Function to handle CLI menu choices:
-void handleCLIMenu()
+void handleCLIMenu(string &firstName, string &lastName)
 {
     switch (choice)
     {
@@ -415,10 +416,10 @@ void handleCLIMenu()
         cancelOrder();
         break;
     case 5:
-        checkoutOrder();
+        checkoutOrder(firstName, lastName);
         break;
     case 0:
-        continueRunning = endProgram(); // Program shouldn't be running
+        continueRunning = endProgram(firstName, lastName); // Program shouldn't be running
         break;
     default:
         // Input Validation:
@@ -431,6 +432,7 @@ void handleCLIMenu()
 // Main Procedure:
 int main()
 {
+    string firstName, lastName;
     // Welcome Message:
     cout << "--------------------------------------" << endl;
     cout << endl;
@@ -454,7 +456,7 @@ int main()
     while (continueRunning) // Check if the program is meant to be running or not.
     {
         displayCLIMenu();
-        handleCLIMenu();
+        handleCLIMenu(firstName, lastName);
     }
 
     cout << endl;
