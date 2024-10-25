@@ -94,6 +94,6 @@ int main()
     cout << endl;
 
     // Final message:
-    cout << "END OF PROGRAM";
+    cout << "Have a great day!";
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final message
 }

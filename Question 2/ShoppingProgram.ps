@@ -19,22 +19,25 @@ function placeOrder()
 
     # Variables:
     integer amountOrdered, orderCount = 1, i, itemNo
-    double grossTotal, itemPrice, orderedItemPrices[amountOrdered]
+    double grossTotal, itemPrice
+
+    # Array to store the prices of the ordered items:
+    double orderedItemPrices[amountOrdered]
 
     # Constant variables:
     Constant double COFFEE_PRICE = 15.00, SANDWICH_PRICE = 30.00, SALAD_PRICE = 25.00, JUICE_PRICE = 10.00, MUFFIN_PRICE = 20.00, PIZZA_PRICE = 35.00, SOUP_PRICE = 18.00, BURGER_PRICE = 40.00
 
     viewOrder(COFFEE_PRICE, SANDWICH_PRICE, SALAD_PRICE, JUICE_PRICE, MUFFIN_PRICE, PIZZA_PRICE, SOUP_PRICE, BURGER_PRICE)
 
-    # Purchasing less thant 25 items:
-    do until amountOrdered <= 25
+    # Input validation for amount of items:
+    do
         display "Choose the amount of items you want to purchase (25 items max): "
         input amountOrdered
-    loop
+    until amountOrdered > 0 and amountOrdered <= 25
 
     # Main loop of the function:
-    for i = 0 to amountOrdered do
-        display "Choose the item no", i, " that you want to purchase: "
+    for i = 1 to amountOrdered do
+        display "Choose the item no. ", i, " that you want to purchase: "
         input itemNo
         
         # Switch case of the menu items:
@@ -55,11 +58,14 @@ function placeOrder()
             itemPrice = SOUP_PRICE
             Case 8
             itemPrice = BURGER_PRICE
+            Default
+                display "Invalid item number. Please try again."
+                i = i - 1
         endselect
 
         # Calculations:
-        grossTotal = grossTotal + itemPrice
-        orderedItemPrices[orderCount] = itemPrice
+        grossTotal += itemPrice
+        orderedItemPrices[i] = itemPrice
         orderCount = orderCount + 1
     endfor
 
@@ -88,7 +94,7 @@ integer netTotal, discountAmount
 
     # Write to CafeteriaBill.txt
     if exists(CafeteriaBill.txt) then 
-        open output(CafeteriaBill.txt)
+        open append(CafeteriaBill.txt)
         write(valFirstName, " ", valLastName,  " R", netTotal) to CafeteriaBill.txt
         close(CafeteriaBill.txt)
     endif
@@ -113,5 +119,5 @@ Start
     grossTotal = placeOrder()
     checkoutOrder(grossTotal, firstName, lastName)
 
-    display 
+    display "Have a great day!"
 End
