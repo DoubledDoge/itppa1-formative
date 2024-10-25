@@ -72,7 +72,7 @@ int main()
     double avgScore;
 
     // My optional greeting message:
-    cout << "Hello user! In this program, you will need to enter the scores for 5 students seperately. Once completed, the program will then determine the average, minimum and maximum of your scores. Please note that student scores should be a number that is between these ranges: (0 - 100)." << endl;
+    cout << "Hello user! Please note that student scores should be a number that is between these ranges: (0 - 100)." << endl;
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the greeting message
     cout << endl;
 
