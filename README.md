@@ -26,6 +26,10 @@ This repository as a whole contains:
 - A flowchart (Question 2)
 - An pseudocode algorithm (Question 2)
 
+## Progress
+
+The progress of the project as a whole is around 80% complete.
+
 ## Note
 
 This repository is currently private and contains academic work for evaluation purposes.
