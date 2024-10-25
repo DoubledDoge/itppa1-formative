@@ -1,3 +1,20 @@
+function viewOrder(valCOFFEE_PRICE, valSANDWICH_PRICE, valSALAD_PRICE, valJUICE_PRICE, valMUFFIN_PRICE, valPIZZA_PRICE, valSOUP_PRICE, valBURGER_PRICE))
+
+    display "======================= Cafeteria Item Menu ========================" 
+    display "1. Coffee       - R ", valCOFFEE_PRICE 
+    display"2. Sandwich     - R ", valSANDWICH_PRICE 
+    display "3. Salad        - R ", valSALAD_PRICE
+    display"4. Juice        - R ", valJUICE_PRICE
+    display "5. Muffin       - R ", valMUFFIN_PRICE
+    display "6. Pizza Slice  - R ", valPIZZA_PRICE
+    display "7. Soup         - R ", valSOUP_PRICE
+    display "8. Burger       - R ", valBURGER_PRICE
+    display "===================================================================="
+ 
+
+endfunction
+
+
 function placeOrder()
 
     # Variables:
@@ -5,7 +22,9 @@ function placeOrder()
     double grossTotal, itemPrice, orderedItemPrices[amountOrdered]
 
     # Constant variables:
-    Constant double COFFEE_PRICE = 15.00, SANDWICH_PRICE = 30.00, SALAD_PRICE = 25.00,JUICE_PRICE = 10.00, MUFFIN_PRICE = 20.00, PIZZA_PRICE = 35.00, SOUP_PRICE = 18.00,BURGER_PRICE = 40.00
+    Constant double COFFEE_PRICE = 15.00, SANDWICH_PRICE = 30.00, SALAD_PRICE = 25.00, JUICE_PRICE = 10.00, MUFFIN_PRICE = 20.00, PIZZA_PRICE = 35.00, SOUP_PRICE = 18.00, BURGER_PRICE = 40.00
+
+    viewOrder(COFFEE_PRICE, SANDWICH_PRICE, SALAD_PRICE, JUICE_PRICE, MUFFIN_PRICE, PIZZA_PRICE, SOUP_PRICE, BURGER_PRICE)
 
     # Purchasing less thant 25 items:
     do until amountOrdered <= 25
@@ -79,9 +98,10 @@ endfunction
 
 ShoppingProgram
 Start
-    string firstName, lastName
-    integer grossTotal
 
+    # Normal Variables:
+    string firstName, lastName
+    
     # First and last name input:
     display "Please enter your first name: "
     input firstName
