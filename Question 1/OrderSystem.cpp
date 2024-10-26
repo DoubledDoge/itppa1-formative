@@ -41,7 +41,7 @@ string formatPrice(double price)
 }
 
 // Function to end the program:
-bool endProgram(string &firstName, string &lastName)
+bool endProgram(const string &firstName, const string &lastName)
 {
     cout << endl;
     cout << "Thank you for using the Cafeteria Order System, " << firstName << " " << lastName << "! Have a great day!" << endl;
@@ -283,7 +283,7 @@ void cancelOrder()
     cout << endl;
 }
 
-void checkoutOrder(string &firstName, string &lastName)
+void checkoutOrder(const string &firstName, const string &lastName)
 {
     double netTotal = 0, discountAmount = 0;
     int confirmed1 = 0, confirmed2 = 0;
@@ -391,7 +391,7 @@ void displayCLIMenu()
 }
 
 // Function to handle CLI menu choices:
-void handleCLIMenu(string &firstName, string &lastName)
+void handleCLIMenu(const string &firstName, const string &lastName)
 {
     switch (choice)
     {
