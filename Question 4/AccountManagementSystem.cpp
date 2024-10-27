@@ -9,7 +9,7 @@
 using namespace std;
 
 // Function to get a valid string input from the user:
-string getValidInput(const string &PROMPT)
+string getValidStrInput(const string &PROMPT)
 {
     string input;
     do
@@ -28,8 +28,41 @@ string getValidInput(const string &PROMPT)
     return input;
 }
 
+// Function to get a valid integer input from the user:
+int getValidIntInput(const string &PROMPT, int minValue, int maxValue)
+{
+    int input;
+    bool validInput = false;
+
+    do
+    {
+        cout << PROMPT;
+
+        // Check if the input is an integer
+        if (cin >> input)
+        {
+            // Check if the input is within the specified range
+            if (input >= minValue && input <= maxValue)
+            {
+                validInput = true;
+            }
+            else
+            {
+                cout << "Please enter a number between " << minValue << " and " << maxValue << "." << endl;
+            }
+        }
+        else
+        {
+            cout << "Invalid input. Please enter a valid integer." << endl;
+            cin.clear(); // Clear the error flag
+        }
+    } while (!validInput);
+    return input;
+}
+
 void createAccount(string &name, int &accountNumber, double &balance)
 {
+    name = getValidInput("Please enter your name: ");
 }
 
 void depositMoney(double &balance)
@@ -48,7 +81,7 @@ void checkBalance(const double &balance)
 void displayCLIMenu()
 {
     // CLI menu:
-    cout << "===== Cafeteria CLI Menu =====" << endl;
+    cout << "===== Bank Account CLI Menu =====" << endl;
     cout << endl;
     cout << "1. Create New Account" << endl;
     cout << "2. Deposit Money" << endl;

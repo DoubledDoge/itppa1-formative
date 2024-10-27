@@ -49,7 +49,7 @@ bool endProgram(const string &firstName, const string &lastName)
 }
 
 // Function to get a valid string input from the user:
-string getValidInput(const string &PROMPT)
+string getValidStrInput(const string &PROMPT)
 {
     string input;
     do
@@ -68,12 +68,44 @@ string getValidInput(const string &PROMPT)
     return input;
 }
 
+// Function to get a valid integer input from the user:
+int getValidIntInput(const string &PROMPT, int minValue, int maxValue)
+{
+    int input;
+    bool validInput = false;
+
+    do
+    {
+        cout << PROMPT;
+
+        // Check if the input is an integer
+        if (cin >> input)
+        {
+            // Check if the input is within the specified range
+            if (input >= minValue && input <= maxValue)
+            {
+                validInput = true;
+            }
+            else
+            {
+                cout << "Please enter a number between " << minValue << " and " << maxValue << "." << endl;
+            }
+        }
+        else
+        {
+            cout << "Invalid input. Please enter a valid integer." << endl;
+            cin.clear(); // Clear the error flag
+        }
+    } while (!validInput);
+    return input;
+}
+
 // Function to get the user's full name:
 void getUserName(string &firstName, string &lastName)
 {
-    firstName = getValidInput("Please enter your first name: ");
+    firstName = getValidStrInput("Please enter your first name: ");
     cout << endl;
-    lastName = getValidInput("Please enter your last name:  ");
+    lastName = getValidStrInput("Please enter your last name:  ");
 }
 
 // Function for displaying the current order summary:
@@ -110,13 +142,12 @@ void viewMenu()
 // Function to place an order:
 void placeOrder()
 {
-    int amountOrdered, itemNo;
+    int amountOrdered, itemNo, returnChoice;
 
     if (hasOrdered)
     {
-        int returnChoice;
-        cout << "It seems that you have already added an order before. Do you want to add more items? (Enter '1' for yes): ";
-        cin >> returnChoice;
+        // Use the function to get a valid integer input:
+        returnChoice = getValidIntInput("It seems that you have already added an order before. Do you want to add more items? (Enter '1' for yes): ", 0, 1);
         if (returnChoice != 1)
         {
             cout << endl;
@@ -131,12 +162,8 @@ void placeOrder()
     }
 
     // Inputting only 25 items max:
-    do
-    {
-        cout << "Choose the amount of items you want to purchase (" << MAX_ITEMS << " items max): ";
-        cin >> amountOrdered;
-        cout << endl;
-    } while (amountOrdered > MAX_ITEMS);
+    amountOrdered = getValidIntInput("Choose the amount of items you want to purchase (25 items max): ", 1, MAX_ITEMS);
+    cout << endl;
 
     viewMenu();
 
@@ -144,9 +171,7 @@ void placeOrder()
     for (int i = 1; i <= amountOrdered; i++)
     {
         cout << endl;
-        cout << "Choose the item no. " << i << " that you want to purchase (Enter '0' to display the item menu again): ";
-        cin >> itemNo;
-        cin.clear();
+        itemNo = getValidIntInput("Choose the item no. " + to_string(i) + " that you want to purchase (Enter '0' to display the item menu again): ", 0, 8); // to_string(i) converts the integer i to a string (CITATION NEEDED)
         cout << endl;
 
         // Variables used for the switch statement:
@@ -244,11 +269,10 @@ void cancelOrder()
     // Cancel the order if the user has ordered:
     if (hasOrdered)
     {
-        // Simple confirmation of the user:
-        int confirm = 0;
+        int confirm;
 
-        cout << "Are you sure you want to cancel your order? (Enter '1' for Yes): ";
-        cin >> confirm;
+        // Simple confirmation of the user:
+        confirm = getValidIntInput("Are you sure you want to cancel your order? (Enter '1' for Yes): ", 0, 1);
 
         // Resetting the order:
         if (confirm == 1)
@@ -319,15 +343,14 @@ void checkoutOrder(const string &firstName, const string &lastName)
         cout << endl;
 
         // Ask the user to write their details to CafeteriaBill.txt:
-        cout << "Confirm transaction? Your bill and details will be written to a file called CafeteriaBill.txt (Enter '1' for Yes): ";
-        cin >> confirmed1;
+        confirmed1 = getValidIntInput("Are you sure you want to write your details to CafeteriaBill.txt? (Enter '1' for Yes): ", 0, 1);
         cout << endl;
 
         if (confirmed1 == 1)
         {
             // Writing the details to the file:
             filesystem::path filePath = "CafeteriaBill.txt";
-            ofstream outFile(filePath, ios::app); // Open in append mode
+            ofstream outFile(filePath, ios::app); // Open in append mode (CITATION NEEDED)
 
             if (outFile.is_open())
             {
@@ -342,8 +365,7 @@ void checkoutOrder(const string &firstName, const string &lastName)
             }
 
             // Ask the user to finish the program once the file has been written:
-            cout << "Are you finished using this program? (Enter '1' for Yes): ";
-            cin >> confirmed2;
+            confirmed2 = getValidIntInput("Are you finished using this program? (Enter '1' for Yes): ", 0, 1);
             cout << endl;
             if (confirmed2 == 1)
             {
@@ -384,9 +406,7 @@ void displayCLIMenu()
     cout << endl;
 
     // Choosing the user option
-    cout << "Enter your choice (0-5): ";
-    cin >> choice;
-    cin.clear();
+    choice = getValidIntInput("Enter your choice (0-5): ", 0, 5);
     cout << endl;
 }
 
