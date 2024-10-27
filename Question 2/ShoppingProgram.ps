@@ -1,20 +1,20 @@
-function viewOrder(valCOFFEE_PRICE, valSANDWICH_PRICE, valSALAD_PRICE, valJUICE_PRICE, valMUFFIN_PRICE, valPIZZA_PRICE, valSOUP_PRICE, valBURGER_PRICE))
+# Function that displays the item menu to the user with the items, and its corresponding prices:
+function viewOrder(valCOFFEE_PRICE, valSANDWICH_PRICE, valSALAD_PRICE, valJUICE_PRICE, valMUFFIN_PRICE, valPIZZA_PRICE, valSOUP_PRICE, valBURGER_PRICE)
 
     display "======================= Cafeteria Item Menu ========================" 
     display "1. Coffee       - R ", valCOFFEE_PRICE 
-    display"2. Sandwich     - R ", valSANDWICH_PRICE 
+    display "2. Sandwich     - R ", valSANDWICH_PRICE 
     display "3. Salad        - R ", valSALAD_PRICE
-    display"4. Juice        - R ", valJUICE_PRICE
+    display "4. Juice        - R ", valJUICE_PRICE
     display "5. Muffin       - R ", valMUFFIN_PRICE
-    display "6. Pizza Slice  - R ", valPIZZA_PRICE
+    display "6. Pizza Slice  - R ", valPIZZA_PRIC
     display "7. Soup         - R ", valSOUP_PRICE
     display "8. Burger       - R ", valBURGER_PRICE
     display "===================================================================="
- 
-
+    return
 endfunction
 
-
+# Function that adds your chosen order to an array, and calulates prices:
 function placeOrder()
 
     # Variables:
@@ -72,6 +72,7 @@ function placeOrder()
     return grossTotal
 endfunction
 
+# Function that writes your order to a file and adds a discount (if applicable):
 function checkoutOrder(valGrossTotal, valFirstName, valLastName)
 
 # Variables:
@@ -98,10 +99,10 @@ integer netTotal, discountAmount
         write(valFirstName, " ", valLastName,  " R", netTotal) to CafeteriaBill.txt
         close(CafeteriaBill.txt)
     endif
-
     return
 endfunction
 
+# Main program:
 ShoppingProgram
 Start
 
@@ -118,6 +119,5 @@ Start
     # Functions:
     grossTotal = placeOrder()
     checkoutOrder(grossTotal, firstName, lastName)
-
     display "Have a great day!"
 End
