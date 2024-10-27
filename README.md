@@ -13,9 +13,9 @@ The repository is organized into four main folders, each corresponding to a ques
 
 ## Releases
 
-I'll personally have some few releases which will only show the .exe files front and center for my own contentment. Be sure that this repository will be archived as soon as the project is deemed 100% completed. 
+I'll personally have some few releases which will only show the .exe files front and center for my own contentment. Be sure that this repository will be archived as soon as the project is completed. 
 
-You can find the current release here: 
+You can find the current releases here: 
 https://github.com/DoubledDoge/itppa1-formative/releases/tag/university-project
 
 ## Contents
@@ -28,8 +28,8 @@ This repository as a whole contains:
 
 ## Progress
 
-The progress of the project as a whole is around 80% complete.
+The progress of the project as a whole is around 90% complete. Just need to add some more comments, some citations, maybe a bibliography, and of course my documentation.
 
 ## Note
 
-This repository is currently private and contains academic work for evaluation purposes.
+This repository is currently private and contains academic work for evaluation purposes. It will be made public after the project is deemed 100% complete.
