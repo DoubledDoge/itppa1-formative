@@ -7,6 +7,7 @@
 #include <thread>
 #include <fstream>
 #include <filesystem>
+#include <limits>
 
 using namespace std;
 
@@ -77,7 +78,6 @@ int getValidIntInput(const string &PROMPT, int minValue, int maxValue)
         // Check if the input is an integer
         if (cin >> input)
         {
-            // Check if the input is within the specified range
             if (input >= minValue && input <= maxValue)
             {
                 validInput = true;
@@ -90,9 +90,12 @@ int getValidIntInput(const string &PROMPT, int minValue, int maxValue)
         else
         {
             cout << "Invalid input. Please enter a valid integer." << endl;
-            cin.clear(); // Clear the error flag
+            cin.clear();                                         // Clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
         }
     } while (!validInput);
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear any remaining newline
     return input;
 }
 
@@ -181,7 +184,6 @@ void placeOrder()
         switch (itemNo)
         {
         case 0:
-            // Display the menu again at the user's request:
             viewMenu();
             i--; // Reset i to previous value to prevent the item being discarded
             break;
@@ -219,19 +221,15 @@ void placeOrder()
             break;
         }
 
-        // Check if its a valid item number:
-        if (itemNo > 0 && itemNo < 9)
-        {
-            // Calculations:
-            grossTotal += itemPrice;                   // Add the item price to the gross total
-            orderedItemNames[orderCount] = itemName;   // Add the item name to the ordered item names array
-            orderedItemPrices[orderCount] = itemPrice; // Add the item price to the ordered item prices array
-            orderCount++;                              // Increment the order count
+        // Calculations:
+        grossTotal += itemPrice;                   // Add the item price to the gross total
+        orderedItemNames[orderCount] = itemName;   // Add the item name to the ordered item names array
+        orderedItemPrices[orderCount] = itemPrice; // Add the item price to the ordered item prices array
+        orderCount++;
 
-            // Confirmation Message:
-            cout << "Added " << itemName << " to your order." << endl;
-            cout << endl;
-        }
+        // Confirmation Message:
+        cout << "Added " << itemName << " to your order." << endl;
+        cout << endl;
     }
 
     // Final Message (Gross total and ordered items):
@@ -469,12 +467,12 @@ int main()
     cout << endl;
 
     // Main Loop of the program (CLI Menu):
-    // Check if the program is meant to be running or not.
+
     do
     {
         displayCLIMenu(choice);
         handleCLIMenu(choice, firstName, lastName);
-    } while (continueRunning);
+    } while (continueRunning); // Check if the program is meant to be running or not.
 
     cout << endl;
     cout << "------------------------------------------------------------------------------------------------" << endl;

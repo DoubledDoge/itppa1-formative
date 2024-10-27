@@ -1,5 +1,5 @@
 # Function that displays the item menu to the user with the items, and its corresponding prices:
-function viewOrder(valCOFFEE_PRICE, valSANDWICH_PRICE, valSALAD_PRICE, valJUICE_PRICE, valMUFFIN_PRICE, valPIZZA_PRICE, valSOUP_PRICE, valBURGER_PRICE)
+function viewMenu(valCOFFEE_PRICE, valSANDWICH_PRICE, valSALAD_PRICE, valJUICE_PRICE, valMUFFIN_PRICE, valPIZZA_PRICE, valSOUP_PRICE, valBURGER_PRICE)
 
     display "======================= Cafeteria Item Menu ========================" 
     display "1. Coffee       - R ", valCOFFEE_PRICE 
@@ -7,33 +7,35 @@ function viewOrder(valCOFFEE_PRICE, valSANDWICH_PRICE, valSALAD_PRICE, valJUICE_
     display "3. Salad        - R ", valSALAD_PRICE
     display "4. Juice        - R ", valJUICE_PRICE
     display "5. Muffin       - R ", valMUFFIN_PRICE
-    display "6. Pizza Slice  - R ", valPIZZA_PRIC
+    display "6. Pizza Slice  - R ", valPIZZA_PRICE
     display "7. Soup         - R ", valSOUP_PRICE
     display "8. Burger       - R ", valBURGER_PRICE
     display "===================================================================="
-    return
 endfunction
 
 # Function that adds your chosen order to an array, and calulates prices:
 function placeOrder()
 
     # Variables:
-    integer amountOrdered, orderCount = 1, i, itemNo
-    double grossTotal, itemPrice
-
-    # Array to store the prices of the ordered items:
-    double orderedItemPrices[amountOrdered]
+    integer amountOrdered, i, itemNo
+    double grossTotal = 0, itemPrice
 
     # Constant variables:
-    Constant double COFFEE_PRICE = 15.00, SANDWICH_PRICE = 30.00, SALAD_PRICE = 25.00, JUICE_PRICE = 10.00, MUFFIN_PRICE = 20.00, PIZZA_PRICE = 35.00, SOUP_PRICE = 18.00, BURGER_PRICE = 40.00
+    Constant double COFFEE_PRICE = 15.00, SANDWICH_PRICE = 30.00, SALAD_PRICE = 25.00,
+                    JUICE_PRICE = 10.00, MUFFIN_PRICE = 20.00, PIZZA_PRICE = 35.00,
+                    SOUP_PRICE = 18.00, BURGER_PRICE = 40.00
 
-    viewOrder(COFFEE_PRICE, SANDWICH_PRICE, SALAD_PRICE, JUICE_PRICE, MUFFIN_PRICE, PIZZA_PRICE, SOUP_PRICE, BURGER_PRICE)
+    # Displaying the menu: 
+    viewMenu(COFFEE_PRICE, SANDWICH_PRICE, SALAD_PRICE, JUICE_PRICE, MUFFIN_PRICE, PIZZA_PRICE, SOUP_PRICE, BURGER_PRICE)
 
     # Input validation for amount of items:
     do
         display "Choose the amount of items you want to purchase (25 items max): "
         input amountOrdered
     until amountOrdered > 0 and amountOrdered <= 25
+
+    # Array to store the prices of the ordered items:
+    double orderedItemPrices[amountOrdered]
 
     # Main loop of the function:
     for i = 1 to amountOrdered do
@@ -42,23 +44,15 @@ function placeOrder()
         
         # Switch case of the menu items:
         Select Case itemNo
-            Case 1
-            itemPrice = COFFEE_PRICE 
-            Case 2
-            itemPrice = SANDWICH_PRICE
-            Case 3
-            itemPrice = SALAD_PRICE
-            Case 4
-            itemPrice = JUICE_PRICE
-            Case 5
-            itemPrice = MUFFIN_PRICE
-            Case 6
-            itemPrice = PIZZA_PRICE
-            Case 7
-            itemPrice = SOUP_PRICE
-            Case 8
-            itemPrice = BURGER_PRICE
-            Default
+            Case 1: itemPrice = COFFEE_PRICE 
+            Case 2: itemPrice = SANDWICH_PRICE
+            Case 3: itemPrice = SALAD_PRICE
+            Case 4: itemPrice = JUICE_PRICE
+            Case 5: itemPrice = MUFFIN_PRICE
+            Case 6: itemPrice = PIZZA_PRICE
+            Case 7: itemPrice = SOUP_PRICE
+            Case 8: itemPrice = BURGER_PRICE
+            Default:
                 display "Invalid item number. Please try again."
                 i = i - 1
         endselect
@@ -66,7 +60,6 @@ function placeOrder()
         # Calculations:
         grossTotal += itemPrice
         orderedItemPrices[i] = itemPrice
-        orderCount = orderCount + 1
     endfor
 
     return grossTotal
@@ -77,7 +70,7 @@ function checkoutOrder(valGrossTotal, valFirstName, valLastName)
 
 # Variables:
 Constant double DISCOUNT_THRESHOLD = 100.00, DISCOUNT_RATE = 0.10
-integer netTotal, discountAmount 
+double netTotal, discountAmount = 0
 
     # Check for discount and apply it:
     if valGrossTotal > DISCOUNT_THRESHOLD then
@@ -94,12 +87,11 @@ integer netTotal, discountAmount
     display "Final Bill: R ", netTotal
 
     # Write to CafeteriaBill.txt
-    if exists(CafeteriaBill.txt) then 
-        open append(CafeteriaBill.txt)
-        write(valFirstName, " ", valLastName,  " R", netTotal) to CafeteriaBill.txt
-        close(CafeteriaBill.txt)
+    if exists("CafeteriaBill.txt") then 
+        open append("CafeteriaBill.txt")
+        write(valFirstName, " ", valLastName, " R", netTotal) to CafeteriaBill.txt
+        close("CafeteriaBill.txt")
     endif
-    return
 endfunction
 
 # Main program:

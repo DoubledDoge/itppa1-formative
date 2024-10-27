@@ -11,50 +11,41 @@ using namespace std;
 // Function to get the scores and do some calculations with them:
 void inputScores(int studentScores[], int &sumScore, int &maxScore, int &minScore)
 {
-    // Repeat for the entire length of the array:
-    for (int i = 0; i < 5; i++)
+    const int NUM_STUDENTS = 5;
+    const int MIN_SCORE = 0;
+    const int MAX_SCORE = 100;
+
+    for (int i = 0; i < NUM_STUDENTS; i++)
     {
-        // Input validation:
         do
         {
-            // Getting all 5 student scores from the user:
-            cout << "Please enter the score of student " << i + 1 << ": ";
+            cout << "Please enter the score of student " << i + 1 << " (0-100): ";
             cin >> studentScores[i];
-        } while (studentScores[i] < 0 || studentScores[i] > 100);
+        } while (studentScores[i] < MIN_SCORE || studentScores[i] > MAX_SCORE);
 
-        // Adding inputted score to the sum of all scores:
+        // Calculations for the sum of scores, max score, and min score:
         sumScore += studentScores[i];
-
-        // Determine current highest score (if applicable):
-        if (studentScores[i] > maxScore)
-        {
-            maxScore = studentScores[i];
-        }
-        // Determine current lowest score:
-        if (studentScores[i] < minScore)
-        {
-            minScore = studentScores[i];
-        }
+        maxScore = max(maxScore, studentScores[i]);
+        minScore = min(minScore, studentScores[i]);
     }
     return;
 }
 
 // Function for calculating the average score using the sum of scores:
-double calculateAvg(int sumScore)
+double calculateAvg(double sumScore)
 {
     return (sumScore / 5);
 }
 
 // Function to display all of the inputted scores back to the user in the order they were entered:
-void displayScores(int studentScores[])
+void displayScores(const int studentScores[])
 {
-    // Displaying a label
-    cout << "Here are your scores of your five students:" << endl;
+    cout << "Here are the scores of your five students:" << endl;
 
     // Loop for displaying the student socores:
     for (int i = 0; i < 5; i++)
     {
-        cout << "Student " << i + 1 << ":" << studentScores[i] << endl;
+        cout << "Student " << i + 1 << ": " << studentScores[i] << endl;
     }
     return;
 }

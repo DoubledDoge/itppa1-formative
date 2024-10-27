@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Global variable to check if the user has an account:
 bool accountExists = false;
 
 // Function to get a valid string input from the user:
@@ -71,8 +72,8 @@ void createAccount(string &name, int &accountNumber, double &balance)
         int choice = getValidIntInput("You already have a bank account with us. Do you want to overwrite your current account details? (Enter '1' for yes): ", 0, 1);
         if (choice != 1)
         {
-            cout << endl;
-            cout << "Returning to the main menu." << endl;
+            cout << endl
+                 << "Returning to the main menu." << endl;
             return;
         }
         cout << endl;
@@ -99,10 +100,8 @@ void createAccount(string &name, int &accountNumber, double &balance)
         }
     } while (balance < 0);
 
-    // Success message:
-    cout << "You have successfully created an account with R" << balance << " as your initial deposit." << endl;
-    cout << endl;
-    return;
+    cout << "You have successfully created an account with R" << balance << " as your initial deposit." << endl
+         << endl;
 }
 
 // Function to deposit money into the user's account:
@@ -129,9 +128,8 @@ void depositMoney(double &balance)
         // Adding the deposit amount to the balance:
         balance += depositAmount;
 
-        // Success message:
-        cout << endl;
-        cout << "You have successfully deposited R" << depositAmount << " into your account." << endl;
+        cout << endl
+             << "You have successfully deposited R" << depositAmount << " into your account." << endl;
         cout << endl;
         this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the success message
     }
@@ -179,9 +177,8 @@ void withdrawMoney(double &balance)
         // Subtracting the withdraw amount from the balance:
         balance -= withdrawAmount;
 
-        // Success message:
-        cout << endl;
-        cout << "You have successfully withdrawn R" << withdrawAmount << " from your account." << endl;
+        cout << endl
+             << "You have successfully withdrawn R" << withdrawAmount << " from your account." << endl;
         cout << endl;
         this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the success message
     }
@@ -238,23 +235,20 @@ void displayAccountDetails(const string &name, const int &accountNumber, const d
 // Function to display the CLI menu:
 void displayCLIMenu(int &choice)
 {
-    // CLI menu:
-    cout << "===== Bank Account CLI Menu =====" << endl;
-    cout << endl;
-    cout << "1. Create New Account" << endl;
-    cout << "2. Deposit Money" << endl;
-    cout << "3. Withdraw Money" << endl;
-    cout << "4. Check Balance" << endl;
-    cout << "5. Display Account Details" << endl;
-    cout << "0. Exit Program" << endl;
-    cout << endl;
-    cout << "=================================" << endl;
-    cout << endl;
+    cout << "===== Bank Account CLI Menu =====" << endl
+         << endl
+         << "1. Create New Account" << endl
+         << "2. Deposit Money" << endl
+         << "3. Withdraw Money" << endl
+         << "4. Check Balance" << endl
+         << "5. Display Account Details" << endl
+         << "0. Exit Program" << endl
+         << endl
+         << "=================================" << endl
+         << endl;
 
-    // Choosing the user option
     choice = getValidIntInput("Enter your choice (0-5): ", 0, 5);
     cout << endl;
-    return;
 }
 
 // Function to handle CLI menu choices:
