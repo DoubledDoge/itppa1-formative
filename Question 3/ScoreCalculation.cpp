@@ -4,9 +4,7 @@ Student Score Calculator
 This program calculates and displays statistics for a set of student scores.
 It allows users to:
 - Input scores for 5 students
-- View all entered scores
-- See the average score
-- See the highest and lowest scores
+- View the average score and the highest and lowest scores
 
 Key features:
 - Input validation (scores must be between 0 and 100)
