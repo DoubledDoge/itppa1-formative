@@ -16,7 +16,7 @@ The repository is organized into four main folders, each corresponding to a ques
 I'll personally have some few releases which will only show the .exe files front and center for my own contentment. Be sure that this repository will be archived as soon as the project is completed. 
 
 You can find the current releases here: 
-https://github.com/DoubledDoge/itppa1-formative/releases/tag/university-project
+https://github.com/DoubledDoge/itppa1-formative/releases
 
 ## Contents
 
