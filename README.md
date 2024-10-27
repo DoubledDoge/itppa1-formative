@@ -11,7 +11,7 @@ The repository is organized into four main folders, each corresponding to a ques
 - Question3/
 - Question4/
 
-Alongside these, there are several files scattered around, as well as a subfolder inside Question 2/ called Flowcharts/, where all of my flowcharts are organised as .png files.
+Alongside these, there are several files scattered around, as well as a subfolder inside Question 2 called Flowcharts, where all of my flowcharts are organised as .png files.
 
 ## Releases
 
@@ -33,10 +33,10 @@ Note that the only thing missing is my main project document, which I prefer to 
 
 ## Completion
 
-This project is now 100% completed. Currently, it is left abandoned, as I have no further desires to refine the project more than I should. Since its open souce, you are more than free to use this for your own purposes.
+This project is now 100% completed. Currently, it is left semi-abandoned as I have no further desires to refine the project more than I should. Since its open souce, you are more than free to use this for your own purposes.
 
 ## Note
 
-This repository has been made private before to preserve the integrity of my own work, but is now obviously made public. Right now, I have no desires to continue on this project any further, and thus will be left archived until further notice. Just know that some of the source code is very much representative of my junior programming skills. I have been able to further refine it in the future, but I prefer it to be left alone as a piece of my personal history. It is my first repository, after all.
+This repository has been made private before to preserve the integrity of my own work, but is now obviously made public. Right now, I have no desires to continue on this project any further, and some of the source code is very much representative of my junior programming skills. I have been able to further refine it in the future, but I prefer it to be left alone as a piece of my personal history. It is my first repository, after all.
 
 If there are any questions you may have about this repository, feel free to contact me at any time. I'd be glad to help you.
