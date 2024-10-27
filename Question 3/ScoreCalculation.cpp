@@ -1,4 +1,19 @@
-// (My Documentation Placeholder)
+/*
+Student Score Calculator
+
+This program calculates and displays statistics for a set of student scores.
+It allows users to:
+- Input scores for 5 students
+- View all entered scores
+- See the average score
+- See the highest and lowest scores
+
+Key features:
+- Input validation (scores must be between 0 and 100)
+- Calculation of sum, average, maximum, and minimum scores
+- Display of individual scores and statistics
+- User-friendly interface with brief pauses for readability
+*/
 
 // Preamble libraries:
 #include <iostream>
@@ -67,7 +82,7 @@ int main()
 
     // My optional greeting message:
     cout << "Hello user! Please note that student scores should be a number that is between these ranges: (0 - 100)." << endl;
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the greeting message
+    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the greeting message (Sruthy, 2020)
     cout << endl;
 
     // Function to get the scores and do some calculations with them:
@@ -79,16 +94,16 @@ int main()
 
     // Function to display all of the inputted scores back to the user in the order they were entered:
     displayScores(studentScores);
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the student scores
+    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the student scores (Sruthy, 2020)
     cout << endl;
 
     // Function to display some of the other key elements:
     displayOthers(avgScore, maxScore, minScore);
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the other elements
+    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the other elements (Sruthy, 2020)
     cout << endl;
 
     // Final message:
     cout << "Have a great day!";
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final message
+    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final message (Sruthy, 2020)
     return 0;
 }

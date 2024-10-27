@@ -1,4 +1,24 @@
-// (My Documentation Placeholder)
+/*
+Cafeteria Order System
+
+This program implements a command-line interface (CLI) for a university cafeteria ordering system.
+It allows users to:
+- View the menu
+- Place orders
+- View current orders
+- Cancel orders
+- Checkout and apply discounts
+- Save order details to a file
+
+Key features:
+- User "authentication" with first and last name
+- Menu with various food items and prices
+- Order management (add, view, cancel)
+- Automatic discount application for orders over R100
+- Order summary and bill generation
+- File output for completed orders
+- User-friendly interface with brief pauses for readability
+*/
 
 // Preamble libraries:
 #include <iostream>
@@ -8,6 +28,7 @@
 #include <fstream>
 #include <filesystem>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -29,14 +50,6 @@ const double MUFFIN_PRICE = 20.00;
 const double PIZZA_PRICE = 35.00;
 const double SOUP_PRICE = 18.00;
 const double BURGER_PRICE = 40.00;
-
-// Function to take a price and returns a string with the price formatted to two decimal places:
-string formatPrice(double price)
-{
-    char buffer[10];
-    snprintf(buffer, sizeof(buffer), "%.2f", price);
-    return string(buffer); // CITATION NEEDED
-}
 
 // Function to end the program:
 bool endProgram(const string &firstName, const string &lastName)
@@ -90,12 +103,11 @@ int getValidIntInput(const string &PROMPT, int minValue, int maxValue)
         else
         {
             cout << "Invalid input. Please enter a valid integer." << endl;
-            cin.clear();                                         // Clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+            cin.clear();                                         // Clears the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears input buffer (Kalinichenko, 2021)
         }
     } while (!validInput);
-
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear any remaining newline
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears input buffer (Kalinichenko, 2021)
     return input;
 }
 
@@ -115,8 +127,7 @@ void displayOrderSummary()
     cout << endl;
     for (int i = 0; i < orderCount; i++)
     {
-        cout << i + 1 << ". " << orderedItemNames[i] << " - R " << formatPrice(orderedItemPrices[i]) << endl;
-        cout << endl;
+        cout << i + 1 << ". " << orderedItemNames[i] << " - R " << fixed << setprecision(2) << orderedItemPrices[i] << endl; // (GeeksforGeeks, 2024a)
     }
     cout << endl;
     return;
@@ -127,14 +138,15 @@ void viewMenu()
 {
     cout << "======================= Cafeteria Item Menu ========================" << endl;
     cout << endl;
-    cout << "1. Coffee       - R " << formatPrice(COFFEE_PRICE) << endl;
-    cout << "2. Sandwich     - R " << formatPrice(SANDWICH_PRICE) << endl;
-    cout << "3. Salad        - R " << formatPrice(SALAD_PRICE) << endl;
-    cout << "4. Juice        - R " << formatPrice(JUICE_PRICE) << endl;
-    cout << "5. Muffin       - R " << formatPrice(MUFFIN_PRICE) << endl;
-    cout << "6. Pizza Slice  - R " << formatPrice(PIZZA_PRICE) << endl;
-    cout << "7. Soup         - R " << formatPrice(SOUP_PRICE) << endl;
-    cout << "8. Burger       - R " << formatPrice(BURGER_PRICE) << endl;
+    cout << fixed << setprecision(2); // (GeeksforGeeks, 2024a)
+    cout << "1. Coffee       - R " << COFFEE_PRICE << endl;
+    cout << "2. Sandwich     - R " << SANDWICH_PRICE << endl;
+    cout << "3. Salad        - R " << SALAD_PRICE << endl;
+    cout << "4. Juice        - R " << JUICE_PRICE << endl;
+    cout << "5. Muffin       - R " << MUFFIN_PRICE << endl;
+    cout << "6. Pizza Slice  - R " << PIZZA_PRICE << endl;
+    cout << "7. Soup         - R " << SOUP_PRICE << endl;
+    cout << "8. Burger       - R " << BURGER_PRICE << endl;
     cout << endl;
     cout << "====================================================================" << endl;
     cout << endl;
@@ -173,7 +185,7 @@ void placeOrder()
     for (int i = 1; i <= amountOrdered; i++)
     {
         cout << endl;
-        itemNo = getValidIntInput("Choose the item no. " + to_string(i) + " that you want to purchase (Enter '0' to display the item menu again): ", 0, 8); // to_string(i) converts the integer i to a string (CITATION NEEDED)
+        itemNo = getValidIntInput("Choose the item no. " + to_string(i) + " that you want to purchase (Enter '0' to display the item menu again): ", 0, 8); // to_string(i) converts the integer i to a string (GeeksforGeeks, 2024b)
         cout << endl;
 
         // Variables used for the switch statement:
@@ -234,8 +246,8 @@ void placeOrder()
 
     // Final Message (Gross total and ordered items):
     displayOrderSummary();
-    cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
+    cout << "Total Bill: R " << fixed << setprecision(2) << grossTotal << endl; // (GeeksforGeeks, 2024a)
+    this_thread::sleep_for(chrono::seconds(3));                                 // Brief wait timer for the user to read the gross total (Sruthy, 2020)
     cout << endl;
     return;
 }
@@ -246,13 +258,13 @@ void viewOrder()
     if (hasOrdered)
     {
         displayOrderSummary();
-        cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
-        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
+        cout << "Total Bill: R " << fixed << setprecision(2) << grossTotal << endl; // (GeeksforGeeks, 2024a)
+        this_thread::sleep_for(chrono::seconds(3));
     }
     else
     {
         cout << "You need to place an order first, silly!" << endl;
-        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message
+        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message (Sruthy, 2020)
     }
     cout << endl;
     return;
@@ -266,7 +278,7 @@ void cancelOrder()
         int confirm;
 
         // Simple confirmation of the user:
-        confirm = getValidIntInput("Are you sure you want to cancel your order? (Enter '1' for Yes): ", 0, 1);
+        confirm = getValidIntInput("Are you sure you want to cancel your order? (Enter '1' for Yes, '0' for No): ", 0, 1);
 
         // Resetting the order:
         if (confirm == 1)
@@ -290,13 +302,13 @@ void cancelOrder()
             cout << endl;
         }
 
-        cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
-        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
+        cout << "Total Bill: R " << fixed << setprecision(2) << grossTotal << endl; // (GeeksforGeeks, 2024a)
+        this_thread::sleep_for(chrono::seconds(3));
     }
     else
     {
         cout << "You need to place an order first, silly!" << endl;
-        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message
+        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message (Sruthy, 2020)
     }
     cout << endl;
     return;
@@ -318,23 +330,23 @@ void checkoutOrder(const string &firstName, const string &lastName)
         if (grossTotal >= DISCOUNT_THRESHOLD)
         {
             cout << "Hooray! You are applicable for our daily discount special!" << endl;
-            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message
+            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message (Sruthy, 2020)
 
             // Calculations:
             discountAmount = grossTotal * DISCOUNT_RATE;
             netTotal = grossTotal - discountAmount;
-            cout << "Discounted Amount: R " << formatPrice(discountAmount) << endl;
+            cout << "Discounted Amount: R " << fixed << setprecision(2) << discountAmount << endl; // (GeeksforGeeks, 2024a)
         }
         else
         {
             cout << "No discount is applied to your order. Too bad." << endl;
-            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message
+            this_thread::sleep_for(chrono::seconds(2)); // Brief wait timer for the user to read the message (Sruthy, 2020)
             netTotal = grossTotal;
         }
 
         displayOrderSummary();
-        cout << "Final Bill: R " << formatPrice(netTotal) << endl;
-        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final bill
+        cout << "Final Bill: R " << fixed << setprecision(2) << netTotal << endl; // (GeeksforGeeks, 2024a)
+        this_thread::sleep_for(chrono::seconds(3));                               // Brief wait timer for the user to read the final bill (Sruthy, 2020)
         cout << endl;
 
         // Ask the user to write their details to CafeteriaBill.txt:
@@ -343,24 +355,25 @@ void checkoutOrder(const string &firstName, const string &lastName)
 
         if (confirmed1 == 1)
         {
-            // Writing the details to the file:
+            // Writing the details to the file: (W3Schools, n.d.)
             filesystem::path filePath = "CafeteriaBill.txt";
-            ofstream outFile(filePath, ios::app); // Open in append mode (CITATION NEEDED)
+            ofstream outFile(filePath, ios::app); // Open in append mode
 
+            // Check if the file exists and is open:
             if (outFile.is_open())
             {
-                outFile << firstName << " " << lastName << ": R" << formatPrice(netTotal) << endl;
-                outFile.close();
-                cout << "Bill details have been written to CafeteriaBill.txt" << endl;
+                outFile << firstName << " " << lastName << ": R" << fixed << setprecision(2) << netTotal << endl; // Writing to the next line of the file (GeeksforGeeks, 2024a)
+                outFile.close();                                                                                  // Close the file
+                cout << "Bill details have been written to CafeteriaBill.txt" << endl;                            // Success message
                 cout << endl;
             }
             else
             {
-                cout << "Unable to open file for writing." << endl;
+                cout << "Unable to open file for writing." << endl; // Error message
             }
 
             // Ask the user to finish the program once the file has been written:
-            confirmed2 = getValidIntInput("Are you finished using this program? (Enter '1' for Yes): ", 0, 1);
+            confirmed2 = getValidIntInput("Are you finished using this program? (Enter '1' for Yes, '0' for No): ", 0, 1);
             cout << endl;
             if (confirmed2 == 1)
             {
@@ -372,7 +385,7 @@ void checkoutOrder(const string &firstName, const string &lastName)
     else
     {
         cout << "You need to place an order first, silly!" << endl;
-        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the message
+        this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the message (Sruthy, 2020)
     }
     return;
 }
@@ -452,7 +465,7 @@ int main()
     cout << endl;
     cout << "Welcome to the Cafeteria Order System!" << endl;
     cout << "Lets get you logged in." << endl;
-    this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the welcome message
+    this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the welcome message (Sruthy, 2020)
     cout << endl;
 
     // User Login:
@@ -463,7 +476,7 @@ int main()
     cout << "Hello, " << firstName << " " << lastName << "!" << endl;
     cout << "You can now proceed with your order." << endl;
     cout << "Please wait..." << endl;
-    this_thread::sleep_for(chrono::seconds(3)); // Wait timer to simulate waiting for the program
+    this_thread::sleep_for(chrono::seconds(3)); // Wait timer to simulate waiting for the program (Sruthy, 2020)
     cout << endl;
 
     // Main Loop of the program (CLI Menu):
@@ -476,6 +489,6 @@ int main()
 
     cout << endl;
     cout << "------------------------------------------------------------------------------------------------" << endl;
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the farewell message
+    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the farewell message (Sruthy, 2020)
     return 0;
 }

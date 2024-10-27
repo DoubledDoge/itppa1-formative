@@ -1,4 +1,20 @@
-// (My Documentation Placeholder)
+/*
+Bank Account Management System
+
+This program implements a command-line interface (CLI) for a basic bank account management system.
+It allows users to:
+- Create a new account
+- Deposit money
+- Withdraw money
+- Check account balance
+- Display account details
+
+Key features:
+- Single user account management
+- Input validation for all user inputs
+- Persistent account state during program execution
+- User-friendly interface with brief pauses for readability
+*/
 
 // Preamble libraries:
 #include <iostream>
@@ -20,7 +36,7 @@ string getValidStrInput(const string &PROMPT)
     {
         // Input:
         cout << PROMPT;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer (CITATION NEEDED)
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer (Kalinichenko, 2021)
         getline(cin, input);
 
         // Input Validation:
@@ -79,7 +95,7 @@ void createAccount(string &name, int &accountNumber, double &balance)
         cout << endl;
     }
 
-    accountExists = true;
+    accountExists = true; // Account is created
 
     // Getting the user's name:
     name = getValidStrInput("Please enter your name: ");
@@ -197,7 +213,7 @@ void checkBalance(const double &balance)
     {
         // Displaying the current balance to the user:
         cout << "Your current balance is: R" << balance << endl;
-        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the current balance
+        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the current balance (Sruthy, 2020)
         cout << endl;
     }
     else
@@ -221,7 +237,7 @@ void displayAccountDetails(const string &name, const int &accountNumber, const d
         cout << "Your current balance: R" << balance << endl;
         cout << endl;
         cout << "===================================" << endl;
-        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the account details
+        this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the account details (Sruthy, 2020)
         cout << endl;
     }
     else
@@ -290,7 +306,7 @@ int main()
     cout << "------------------------------------------------------------------------------------------------" << endl;
     cout << endl;
     cout << "Welcome to the Bank Account Management System!" << endl;
-    this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the welcome message
+    this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the welcome message (Sruthy, 2020)
     cout << endl;
 
     // Main Loop of the program (CLI Menu):
@@ -304,6 +320,6 @@ int main()
     cout << "Thank you for using the Bank Account Management System, " << name << "! Have a great day!" << endl;
     cout << endl;
     cout << "------------------------------------------------------------------------------------------------" << endl;
-    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the farewell message
+    this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the farewell message (Sruthy, 2020)
     return 0;
 }
