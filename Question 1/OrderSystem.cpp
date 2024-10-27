@@ -11,11 +11,11 @@
 using namespace std;
 
 // Global Arrays:
-string orderedItemNames[MAX_ITEMS];
-double orderedItemPrices[MAX_ITEMS];
+string orderedItemNames[25];
+double orderedItemPrices[25];
 
 // Global Variables:
-int choice, orderCount = 0;
+int orderCount = 0;
 double grossTotal = 0;
 bool continueRunning = true, hasOrdered = false;
 
@@ -29,15 +29,12 @@ const double PIZZA_PRICE = 35.00;
 const double SOUP_PRICE = 18.00;
 const double BURGER_PRICE = 40.00;
 
-// Constant Variable:
-const int MAX_ITEMS = 25;
-
 // Function to take a price and returns a string with the price formatted to two decimal places:
 string formatPrice(double price)
 {
     char buffer[10];
     snprintf(buffer, sizeof(buffer), "%.2f", price);
-    return string(buffer);
+    return string(buffer); // CITATION NEEDED
 }
 
 // Function to end the program:
@@ -64,7 +61,6 @@ string getValidStrInput(const string &PROMPT)
             cout << "You have entered an empty input. Please try again." << endl;
         }
     } while (input.empty());
-
     return input;
 }
 
@@ -106,6 +102,7 @@ void getUserName(string &firstName, string &lastName)
     firstName = getValidStrInput("Please enter your first name: ");
     cout << endl;
     lastName = getValidStrInput("Please enter your last name:  ");
+    return;
 }
 
 // Function for displaying the current order summary:
@@ -119,6 +116,7 @@ void displayOrderSummary()
         cout << endl;
     }
     cout << endl;
+    return;
 }
 
 // Function to display the item menu:
@@ -137,6 +135,7 @@ void viewMenu()
     cout << endl;
     cout << "====================================================================" << endl;
     cout << endl;
+    return;
 }
 
 // Function to place an order:
@@ -162,7 +161,7 @@ void placeOrder()
     }
 
     // Inputting only 25 items max:
-    amountOrdered = getValidIntInput("Choose the amount of items you want to purchase (25 items max): ", 1, MAX_ITEMS);
+    amountOrdered = getValidIntInput("Choose the amount of items you want to purchase (25 items max): ", 1, 25);
     cout << endl;
 
     viewMenu();
@@ -218,11 +217,6 @@ void placeOrder()
             itemName = "Burger";
             itemPrice = BURGER_PRICE;
             break;
-        default:
-            // Input Validation:
-            cout << "Invalid item number. Please try again." << endl;
-            i--; // Reset i to previous value to prevent the item being discarded
-            break;
         }
 
         // Check if its a valid item number:
@@ -245,6 +239,7 @@ void placeOrder()
     cout << "Total Bill: R " << formatPrice(grossTotal) << endl;
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the gross total
     cout << endl;
+    return;
 }
 
 void viewOrder()
@@ -262,6 +257,7 @@ void viewOrder()
         this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message
     }
     cout << endl;
+    return;
 }
 
 void cancelOrder()
@@ -277,9 +273,9 @@ void cancelOrder()
         // Resetting the order:
         if (confirm == 1)
         {
-            grossTotal = 0;                     // Reset the gross total
-            orderCount = 0;                     // Reset the order count
-            for (int i = 0; i < MAX_ITEMS; i++) // Clear the ordered items arrays one by one
+            grossTotal = 0;              // Reset the gross total
+            orderCount = 0;              // Reset the order count
+            for (int i = 0; i < 25; i++) // Clear the ordered items arrays one by one
             {
                 orderedItemNames[i] = ""; // "" = empty string
                 orderedItemPrices[i] = 0.00;
@@ -305,6 +301,7 @@ void cancelOrder()
         this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the error message
     }
     cout << endl;
+    return;
 }
 
 void checkoutOrder(const string &firstName, const string &lastName)
@@ -379,10 +376,11 @@ void checkoutOrder(const string &firstName, const string &lastName)
         cout << "You need to place an order first, silly!" << endl;
         this_thread::sleep_for(chrono::seconds(1)); // Brief wait timer for the user to read the message
     }
+    return;
 }
 
 // Function to display the CLI menu:
-void displayCLIMenu()
+void displayCLIMenu(int &choice)
 {
     // CLI menu:
     cout << "===== Cafeteria CLI Menu =====" << endl;
@@ -408,10 +406,11 @@ void displayCLIMenu()
     // Choosing the user option
     choice = getValidIntInput("Enter your choice (0-5): ", 0, 5);
     cout << endl;
+    return;
 }
 
 // Function to handle CLI menu choices:
-void handleCLIMenu(const string &firstName, const string &lastName)
+void handleCLIMenu(int &choice, const string &firstName, const string &lastName)
 {
     switch (choice)
     {
@@ -441,20 +440,17 @@ void handleCLIMenu(const string &firstName, const string &lastName)
     case 0:
         continueRunning = endProgram(firstName, lastName); // Program shouldn't be running
         break;
-    default:
-        // Input Validation:
-        cout << "Invalid choice. Please enter a valid number from 0 to 5." << endl;
-        cout << endl;
-        break;
     }
+    return;
 }
 
 // Main Procedure:
 int main()
 {
     string firstName, lastName;
+    int choice;
     // Welcome Message:
-    cout << "--------------------------------------" << endl;
+    cout << "------------------------------------------------------------------------------------------------" << endl;
     cout << endl;
     cout << "Welcome to the Cafeteria Order System!" << endl;
     cout << "Lets get you logged in." << endl;
@@ -473,15 +469,15 @@ int main()
     cout << endl;
 
     // Main Loop of the program (CLI Menu):
-    while (continueRunning) // Check if the program is meant to be running or not.
+    // Check if the program is meant to be running or not.
+    do
     {
-        displayCLIMenu();
-        handleCLIMenu(firstName, lastName);
-    }
+        displayCLIMenu(choice);
+        handleCLIMenu(choice, firstName, lastName);
+    } while (continueRunning);
 
     cout << endl;
     cout << "------------------------------------------------------------------------------------------------" << endl;
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the farewell message
-
     return 0;
 }

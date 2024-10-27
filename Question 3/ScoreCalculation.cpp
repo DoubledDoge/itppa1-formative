@@ -36,6 +36,7 @@ void inputScores(int studentScores[], int &sumScore, int &maxScore, int &minScor
             minScore = studentScores[i];
         }
     }
+    return;
 }
 
 // Function for calculating the average score using the sum of scores:
@@ -55,6 +56,7 @@ void displayScores(int studentScores[])
     {
         cout << "Student " << i + 1 << ":" << studentScores[i] << endl;
     }
+    return;
 }
 
 // Function to display some of the other key elements:
@@ -63,6 +65,7 @@ void displayOthers(double avgScore, int maxScore, int minScore)
     cout << "Your average score: " << avgScore << endl;
     cout << "Your highest score: " << maxScore << endl;
     cout << "Your lowest score: " << minScore << endl;
+    return;
 }
 
 int main()
@@ -96,4 +99,5 @@ int main()
     // Final message:
     cout << "Have a great day!";
     this_thread::sleep_for(chrono::seconds(3)); // Brief wait timer for the user to read the final message
+    return 0;
 }
