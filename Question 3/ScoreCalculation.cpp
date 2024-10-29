@@ -1,5 +1,5 @@
 /*
-Student Score Calculator
+Student Score Calculator (Documentation)
 
 This program calculates and displays statistics for a set of student scores.
 It allows users to:

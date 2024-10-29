@@ -1,5 +1,5 @@
 /*
-Bank Account Management System
+Bank Account Management System (Documentation)
 
 This program implements a command-line interface (CLI) for a basic bank account management system.
 It allows users to:

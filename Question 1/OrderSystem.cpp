@@ -1,5 +1,5 @@
 /*
-Cafeteria Order System
+Cafeteria Order System (Documentation)
 
 This program implements a command-line interface (CLI) for a university cafeteria ordering system.
 It allows users to:
